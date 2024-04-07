@@ -1,22 +1,29 @@
 import React, { useState } from "react";
 import "./App.css";
-import CreateTask from "./Components/CreateTask";
 import { Routes, Route } from "react-router-dom";
-import AllTasks from "./Components/AllTasks";
 import Navbar from "./Components/Navbar";
 import NotFound from "./Components/NotFound";
+import TaskList from "./Components/TaskList";
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 function App() {
+  const [tasks, setTasks] = useState([]);
   return (
     <>
-      <div>
-        <Navbar/>
-        <Routes>
-          <Route path="/" element={<CreateTask />} />
-          <Route path="/tasks" element={<AllTasks />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
+      <DndProvider backend={HTML5Backend}>
+        <Navbar />
+        <div style={{ marginTop: "72px" }}>
+          <Routes>
+            <Route
+              path="/"
+              element={<TaskList tasks={tasks} setTasks={setTasks} />}
+            />
+             {/* <Route path="/document" element={<MyDocument data={tasks} />} /> */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </DndProvider>
     </>
   );
 }
