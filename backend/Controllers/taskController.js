@@ -8,7 +8,15 @@ const createTask = async (req, res) => {
   const { name, status, date } = req.body;
   try {
     //   const date = moment(dateString, "YYYY-MM-DD").toDate();
-    const createTask = new taskModel({ name, status, date });
+
+    const latestTask = await taskModel.findOne({}, {}, { sort: { id: -1 } });
+    let id = 1; // Default id value if no tasks are found in the database
+
+    // If there's a latest task, increment its id to generate a new id
+    if (latestTask) {
+      id = latestTask.id + 1;
+    }
+    const createTask = new taskModel({ id, name, status, date });
     await createTask.save();
     return res
       .status(200)
@@ -18,8 +26,6 @@ const createTask = async (req, res) => {
     return res.status(500).send({ message: "error in Creating Task" });
   }
 };
-
-
 
 const getAllTasks = async (req, res) => {
   try {
@@ -89,7 +95,6 @@ module.exports = {
   deleteTask,
 };
 
-
 // const createTask = async (req, res) => {
 //     const { name, status, date } = req.body;
 
@@ -109,7 +114,6 @@ module.exports = {
 //         const formattedDate = parsedDate.format('YYYY-MM-DD');
 //         const newTask = new taskModel({ name, status, date: formattedDate });
 //         await newTask.save();
-        
 
 //         return res.status(200).send({ message: "Task Created Successfully", newTask: { name, status, date: formattedDate } });
 //     } catch (error) {
