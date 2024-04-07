@@ -63,7 +63,7 @@ function CreateTask({ onTaskCreated }) {
             <option value="todo">Todo</option>
             <option value="inProgress">In Progress</option>
             <option value="done">Done</option>
-            <option value="rework">Re-Work</option>
+            <option value="reWork">Re-Work</option>
           </Select>
         </FormControl>
         <FormControl>
