@@ -52,7 +52,6 @@ function Navbar({ tasks, setTasks }) {
               display={"flex"}
               align={"center"}
             >
-              {/* <DownloadPDF tasks={tasks} /> */}
               <Button onClick={openModal}>Create Task</Button>
 
               <Button onClick={toggleColorMode}>

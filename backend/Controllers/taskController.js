@@ -7,12 +7,8 @@ const taskModel = require("../Models/taskSchema");
 const createTask = async (req, res) => {
   const { name, status, date } = req.body;
   try {
-    //   const date = moment(dateString, "YYYY-MM-DD").toDate();
-
     const latestTask = await taskModel.findOne({}, {}, { sort: { id: -1 } });
-    let id = 1; // Default id value if no tasks are found in the database
-
-    // If there's a latest task, increment its id to generate a new id
+    let id = 1;
     if (latestTask) {
       id = latestTask.id + 1;
     }
@@ -94,30 +90,3 @@ module.exports = {
   filterTasks,
   deleteTask,
 };
-
-// const createTask = async (req, res) => {
-//     const { name, status, date } = req.body;
-
-//     try {
-//         let parsedDate;
-
-//         if (!date) {
-//             parsedDate = moment();
-//         } else {
-//             parsedDate = moment(date, "YYYY-MM-DD", true);
-//         }
-
-//         if (!parsedDate.isValid()) {
-//             return res.status(400).send({ message: "Invalid date format" });
-//         }
-
-//         const formattedDate = parsedDate.format('YYYY-MM-DD');
-//         const newTask = new taskModel({ name, status, date: formattedDate });
-//         await newTask.save();
-
-//         return res.status(200).send({ message: "Task Created Successfully", newTask: { name, status, date: formattedDate } });
-//     } catch (error) {
-//         console.error(error);
-//         return res.status(500).send({ message: "Error in Creating Task" });
-//     }
-// };

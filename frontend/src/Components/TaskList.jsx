@@ -76,6 +76,7 @@ const TaskList = ({ tasks, setTasks }) => {
         isOver: !!monitor.isOver(),
       }),
     }));
+    console.log("isOver", isOver);
 
     return { status, isOver, drop };
   });
@@ -83,8 +84,10 @@ const TaskList = ({ tasks, setTasks }) => {
   const handleDrop = (status) => (item) => {
     const { id: taskId } = item;
     moveTask(taskId, status.status);
-    return undefined;
+    console.log("item", item);
+
   };
+
 
   return (
     <Flex direction="column" gap={4}>
@@ -108,7 +111,9 @@ const TaskList = ({ tasks, setTasks }) => {
         </Flex>
       </Container>
       <Flex justify="center">
-        <Button colorScheme="telegram" onClick={downloadPdf}>Download PDF</Button>
+        <Button colorScheme="telegram" onClick={downloadPdf}>
+          Download PDF
+        </Button>
       </Flex>
       {isLoading ? (
         <div>Loading...</div>
@@ -119,8 +124,7 @@ const TaskList = ({ tasks, setTasks }) => {
           {dropTargets.map(({ status, isOver, drop }) => (
             <Box
               key={status}
-              ref={prfRef}
-              {...drop}
+              ref={drop}
               flexGrow={1}
               maxWidth="25%"
               style={{
@@ -128,7 +132,7 @@ const TaskList = ({ tasks, setTasks }) => {
                 borderRadius: "10px",
               }}
             >
-              <Task ref={prfRef} status={status} tasks={allTasks} />
+              <Task ref={prfRef} status={status} tasks={allTasks}  />
             </Box>
           ))}
         </Flex>

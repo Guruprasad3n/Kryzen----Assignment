@@ -1,0 +1,29 @@
+.columns {
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .column {
+    width: 200px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+  }
+  
+  .taskList {
+    min-height: 100px;
+    margin-top: 10px;
+  }
+  
+  .task {
+    border: 1px solid #aaa;
+    border-radius: 3px;
+    background-color: #f9f9f9;
+    padding: 8px;
+    margin-bottom: 5px;
+  }
+  
+  .task:hover {
+    background-color: #eaeaea;
+  }
+  

@@ -1,9 +1,20 @@
-import React, { forwardRef } from "react";
-import { Container, Text, Box } from "@chakra-ui/react";
+import React, { forwardRef, useState } from "react";
+import {
+  Container,
+  Text,
+  Box,
+  Flex,
+  IconButton,
+  Button,
+} from "@chakra-ui/react";
 import { useDrag } from "react-dnd";
+import { DeleteIcon } from "@chakra-ui/icons";
+import axios from "axios";
 
 const Task = forwardRef(({ status, tasks }, ref) => {
-  const filteredTasks = tasks.filter((task) => task.status === status);
+  const [taskList, setTaskList] = useState(tasks);
+
+  const filteredTasks = taskList.filter((task) => task.status === status);
   const taskCount = filteredTasks.length;
 
   const formatDate = (dateString) => {
@@ -14,6 +25,15 @@ const Task = forwardRef(({ status, tasks }, ref) => {
       year: "numeric",
     };
     return new Date(dateString).toLocaleDateString("en-IN", options);
+  };
+
+  const handleDelete = async (taskId) => {
+    try {
+      await axios.delete(`http://localhost:8000/delete-task/${taskId}`);
+      setTaskList(taskList.filter((task) => task._id !== taskId));
+    } catch (error) {
+      console.error("Error deleting task:", error);
+    }
   };
 
   const getStatusColor = () => {
@@ -46,14 +66,19 @@ const Task = forwardRef(({ status, tasks }, ref) => {
       </Box>
       <ul>
         {filteredTasks.map((task, index) => (
-          <TaskItem key={index} task={task} formatDate={formatDate} />
+          <TaskItem
+            key={index}
+            task={task}
+            formatDate={formatDate}
+            onDelete={handleDelete}
+          />
         ))}
       </ul>
     </Container>
   );
 });
 
-const TaskItem = ({ task, formatDate }) => {
+const TaskItem = ({ task, formatDate, onDelete }) => {
   const [{ isDragging }, drag] = useDrag(
     () => ({
       type: "task",
@@ -64,6 +89,10 @@ const TaskItem = ({ task, formatDate }) => {
     }),
     [task.id, task.status]
   );
+
+  const handleDelete = () => {
+    onDelete(task._id);
+  };
 
   return (
     <div ref={drag}>
@@ -85,8 +114,23 @@ const TaskItem = ({ task, formatDate }) => {
         flexDirection="column"
         opacity={isDragging ? 0.5 : 1}
       >
-        <Text>{task.name}</Text>
-        <Text>{formatDate(task.date)}</Text>
+        <Flex alignItems={"center"} justifyContent={"space-evenly"} gap={10}>
+          <Box>
+            {" "}
+            <Text>{task.name}</Text>
+            <Text>{formatDate(task.date)}</Text>
+          </Box>
+
+          <IconButton
+            _hover={"none"}
+            fontSize={"2xl"}
+            color={"red"}
+            icon={<DeleteIcon />}
+            aria-label="Delete Task"
+            variant="ghost"
+            onClick={handleDelete}
+          />
+        </Flex>
       </Box>
     </div>
   );

@@ -6,6 +6,7 @@ import NotFound from "./Components/NotFound";
 import TaskList from "./Components/TaskList";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
+import Drag from "./Components/DragNDrop/Drag";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -14,6 +15,7 @@ function App() {
       <DndProvider backend={HTML5Backend}>
         <Navbar />
         <div style={{ marginTop: "72px" }}>
+          {/* <Drag/> */}
           <Routes>
             <Route
               path="/"
