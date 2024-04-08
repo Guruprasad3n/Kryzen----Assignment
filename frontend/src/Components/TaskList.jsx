@@ -16,9 +16,9 @@ const TaskList = ({ tasks, setTasks }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        let url = `http://localhost:8000/all-tasks`;
+        let url = `https://kryzen-assignment-4d0z.onrender.com/all-tasks`;
         if (startDate && endDate) {
-          url = `http://localhost:8000/task/filter?startDate=${startDate}&endDate=${endDate}`;
+          url = `https://kryzen-assignment-4d0z.onrender.com/task/filter?startDate=${startDate}&endDate=${endDate}`;
         }
         const response = await axios.get(url);
         setAllTasks(response.data.task);
@@ -76,7 +76,6 @@ const TaskList = ({ tasks, setTasks }) => {
         isOver: !!monitor.isOver(),
       }),
     }));
-    console.log("isOver", isOver);
 
     return { status, isOver, drop };
   });
@@ -84,10 +83,8 @@ const TaskList = ({ tasks, setTasks }) => {
   const handleDrop = (status) => (item) => {
     const { id: taskId } = item;
     moveTask(taskId, status.status);
-    console.log("item", item);
-
+    return undefined;
   };
-
 
   return (
     <Flex direction="column" gap={4}>
@@ -124,7 +121,8 @@ const TaskList = ({ tasks, setTasks }) => {
           {dropTargets.map(({ status, isOver, drop }) => (
             <Box
               key={status}
-              ref={drop}
+              ref={prfRef}
+              {...drop}
               flexGrow={1}
               maxWidth="25%"
               style={{
@@ -132,7 +130,7 @@ const TaskList = ({ tasks, setTasks }) => {
                 borderRadius: "10px",
               }}
             >
-              <Task ref={prfRef} status={status} tasks={allTasks}  />
+              <Task ref={prfRef} status={status} tasks={allTasks} />
             </Box>
           ))}
         </Flex>

@@ -13,12 +13,12 @@ import { useState } from "react";
 function CreateTask({ onTaskCreated }) {
   const [name, setName] = useState("");
   const [status, setStatus] = useState("todo");
-  const [date, setTaskDate] = useState("");
+  const [date, setTaskDate] = useState(Date.now());
   const toast = useToast();
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(`http://localhost:8000/create-task`, {
+      const response = await axios.post(`https://kryzen-assignment-4d0z.onrender.com/create-task`, {
         name,
         status,
         date,
