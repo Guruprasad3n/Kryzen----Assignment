@@ -19,7 +19,6 @@ function App() {
               path="/"
               element={<TaskList tasks={tasks} setTasks={setTasks} />}
             />
-             {/* <Route path="/document" element={<MyDocument data={tasks} />} /> */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

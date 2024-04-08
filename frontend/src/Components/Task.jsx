@@ -1,8 +1,8 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { Container, Text, Box } from "@chakra-ui/react";
-import { useDrag, useDrop } from "react-dnd";
+import { useDrag } from "react-dnd";
 
-const Task = ({ status, tasks }) => {
+const Task = forwardRef(({ status, tasks }, ref) => {
   const filteredTasks = tasks.filter((task) => task.status === status);
   const taskCount = filteredTasks.length;
 
@@ -31,7 +31,6 @@ const Task = ({ status, tasks }) => {
     }
   };
 
-
   return (
     <Container textAlign="center">
       <Box
@@ -39,6 +38,7 @@ const Task = ({ status, tasks }) => {
         padding={2}
         marginBottom={4}
         borderRadius={"lg"}
+        ref={ref}
       >
         <Text fontSize="xl" fontWeight="bold">
           {status.toUpperCase()} ({taskCount})
@@ -51,7 +51,7 @@ const Task = ({ status, tasks }) => {
       </ul>
     </Container>
   );
-};
+});
 
 const TaskItem = ({ task, formatDate }) => {
   const [{ isDragging }, drag] = useDrag(
@@ -64,8 +64,6 @@ const TaskItem = ({ task, formatDate }) => {
     }),
     [task.id, task.status]
   );
-
-  console.log("Task status:", task.status);
 
   return (
     <div ref={drag}>

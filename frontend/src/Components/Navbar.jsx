@@ -13,10 +13,12 @@ import {
   ModalBody,
   ModalFooter,
   ModalCloseButton,
+  Text,
 } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import CreateTask from "./CreateTask";
-import DownloadPDF from "./DownloadButton";
+import Logo from "../../public/kryzen.png";
 
 function Navbar({ tasks, setTasks }) {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -36,7 +38,12 @@ function Navbar({ tasks, setTasks }) {
         zIndex="sticky"
       >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <Box>Logo</Box>
+          <Box ml={5}>
+            <Link to={"/"}>
+              {" "}
+              <Text fontSize={"2xl"} fontStyle={"unset"}> Kryzen</Text>
+            </Link>
+          </Box>
 
           <Flex alignItems={"center"}>
             <Stack
