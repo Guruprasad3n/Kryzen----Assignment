@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Flex,
@@ -15,17 +15,22 @@ import {
   ModalCloseButton,
   Text,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import CreateTask from "./CreateTask";
-import Logo from "../../public/kryzen.png";
 
 function Navbar({ tasks, setTasks }) {
   const { colorMode, toggleColorMode } = useColorMode();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
+  const navgate = useNavigate();
+  useEffect(() => {}, []);
+  const handleLogout = () => {
+    localStorage.removeItem("authToken");
+    navgate("/login");
+  };
+  const authToken = localStorage.getItem("authToken");
   return (
     <>
       <Box
@@ -41,7 +46,10 @@ function Navbar({ tasks, setTasks }) {
           <Box ml={5}>
             <Link to={"/"}>
               {" "}
-              <Text fontSize={"2xl"} fontStyle={"unset"}> Kryzen</Text>
+              <Text fontSize={"2xl"} fontStyle={"unset"}>
+                {" "}
+                Kryzen
+              </Text>
             </Link>
           </Box>
 
@@ -57,6 +65,11 @@ function Navbar({ tasks, setTasks }) {
               <Button onClick={toggleColorMode}>
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
+              {authToken && (
+                <Button colorScheme={"red"} onClick={handleLogout}>
+                  Logout
+                </Button>
+              )}
             </Stack>
           </Flex>
         </Flex>

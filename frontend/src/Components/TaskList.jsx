@@ -4,7 +4,7 @@ import axios from "axios";
 import Task from "./Task";
 import { useDrop } from "react-dnd";
 import jsPDF from "jspdf";
-
+import {useNavigate} from "react-router-dom"
 const TaskList = ({ tasks, setTasks }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,9 +13,17 @@ const TaskList = ({ tasks, setTasks }) => {
   const [endDate, setEndDate] = useState("");
   const prfRef = useRef();
 
+
+  const navigate = useNavigate()
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const authToken = localStorage.getItem("authToken");
+        if (!authToken) {
+          navigate("/login")
+          return;
+        }
+
         let url = `https://kryzen-assignment-4d0z.onrender.com/all-tasks`;
         if (startDate && endDate) {
           url = `https://kryzen-assignment-4d0z.onrender.com/task/filter?startDate=${startDate}&endDate=${endDate}`;

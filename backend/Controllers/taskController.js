@@ -7,12 +7,17 @@ const taskModel = require("../Models/taskSchema");
 const createTask = async (req, res) => {
   const { name, status, date } = req.body;
   try {
+    const userId = req.user ? req.user._id : null;
+    if (!userId) {
+      return res.status(401).send({ message: "User ID not provided" });
+    }
+
     const latestTask = await taskModel.findOne({}, {}, { sort: { id: -1 } });
     let id = 1;
     if (latestTask) {
       id = latestTask.id + 1;
     }
-    const createTask = new taskModel({ id, name, status, date });
+    const createTask = new taskModel({ id, name, status, date, userId });
     await createTask.save();
     return res
       .status(200)

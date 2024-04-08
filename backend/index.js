@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const connectDB = require("./Config/db");
 const TaskRouter = require("./Routes/taskRoute");
+const UserRoute = require("./Routes/UserRoute");
 const dotenv = require("dotenv").config();
 
 const app = express();
@@ -16,6 +17,7 @@ app.use(cors());
 // });
 
 app.use("/", TaskRouter);
+app.use("/user", UserRoute);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

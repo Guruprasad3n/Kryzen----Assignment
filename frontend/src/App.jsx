@@ -7,6 +7,8 @@ import TaskList from "./Components/TaskList";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { DndProvider } from "react-dnd";
 import Drag from "./Components/DragNDrop/Drag";
+import Signup from "./Components/User/Signup";
+import Login from "./Components/User/Login";
 
 function App() {
   const [tasks, setTasks] = useState([]);
@@ -18,9 +20,11 @@ function App() {
           {/* <Drag/> */}
           <Routes>
             <Route
-              path="/"
+              path="/task"
               element={<TaskList tasks={tasks} setTasks={setTasks} />}
             />
+            <Route path="/login" element={<Login />} />
+            {/* <Route path="/" element={<Signup />} /> */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

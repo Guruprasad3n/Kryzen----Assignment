@@ -1,11 +1,11 @@
 import React, { forwardRef } from "react";
 import { Container, Text, Box } from "@chakra-ui/react";
 import { useDrag } from "react-dnd";
-
+import { useNavigate } from "react-router-dom";
 const Task = forwardRef(({ status, tasks }, ref) => {
   const filteredTasks = tasks.filter((task) => task.status === status);
   const taskCount = filteredTasks.length;
-
+  const navigate = useNavigate();
   const formatDate = (dateString) => {
     const options = {
       timeZone: "Asia/Kolkata",
@@ -30,6 +30,11 @@ const Task = forwardRef(({ status, tasks }, ref) => {
         return "#FFFFFF";
     }
   };
+  const authToken = localStorage.getItem("authToken");
+
+  if (!authToken) {
+    navigate("/login");
+  }
 
   return (
     <Container textAlign="center">

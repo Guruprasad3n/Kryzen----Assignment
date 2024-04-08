@@ -12,6 +12,8 @@ Frontend: [https://kryzengp.netlify.app/](https://kryzengp.netlify.app/)
 Backend: [https://kryzen-assignment-4d0z.onrender.com](https://kryzen-assignment-4d0z.onrender.com)
 
 ## Directory Structure
+
+```
 kryzen---Assignment/
 ├─ backend/
 │  ├─ Config/
@@ -39,7 +41,7 @@ kryzen---Assignment/
 │  ├─ main.jsx
 │
 ├─ package.json
-
+```
 
 
 ## Features
